@@ -8,59 +8,59 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 10%;
+    --background: 210 20% 98%;
+    --foreground: 215 25% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 10%;
+    --card-foreground: 215 25% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 10%;
+    --popover-foreground: 215 25% 15%;
 
-    --primary: 262 83% 58%;
+    --primary: 199 89% 48%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 5% 96%;
-    --secondary-foreground: 240 10% 10%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 215 25% 15%;
 
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 4% 46%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 262 83% 58%;
+    --accent: 199 89% 48%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 6% 90%;
-    --input: 240 6% 90%;
-    --ring: 262 83% 58%;
+    --border: 210 30% 92%;
+    --input: 210 30% 92%;
+    --ring: 199 89% 48%;
 
     --radius: 0.75rem;
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 240 10% 10%;
-    --sidebar-primary: 262 83% 58%;
+    --sidebar-foreground: 215 25% 15%;
+    --sidebar-primary: 199 89% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 5% 96%;
-    --sidebar-accent-foreground: 240 10% 10%;
-    --sidebar-border: 240 6% 90%;
-    --sidebar-ring: 262 83% 58%;
+    --sidebar-accent: 210 40% 97%;
+    --sidebar-accent-foreground: 215 25% 15%;
+    --sidebar-border: 210 30% 92%;
+    --sidebar-ring: 199 89% 48%;
 
     /* Custom Design Tokens */
-    --surface: 240 5% 97%;
-    --surface-hover: 240 5% 94%;
-    --text-primary: 240 10% 10%;
-    --text-secondary: 240 4% 46%;
-    --text-tertiary: 240 4% 60%;
+    --surface: 210 40% 98%;
+    --surface-hover: 210 40% 95%;
+    --text-primary: 215 25% 15%;
+    --text-secondary: 215 16% 47%;
+    --text-tertiary: 215 10% 60%;
 
     /* Email Category Colors */
-    --category-interested: 142 76% 45%;
-    --category-meeting: 262 83% 58%;
+    --category-interested: 142 71% 45%;
+    --category-meeting: 199 89% 48%;
     --category-not-interested: 0 84% 60%;
     --category-spam: 25 95% 53%;
-    --category-ooo: 280 65% 60%;
-    --category-uncategorized: 240 4% 60%;
+    --category-ooo: 271 91% 65%;
+    --category-uncategorized: 215 10% 60%;
 
     /* Animations */
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
