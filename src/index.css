@@ -8,59 +8,59 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 215 25% 15%;
+    --background: 219 35% 91%;
+    --foreground: 219 20% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 25% 15%;
+    --card-foreground: 219 20% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 15%;
+    --popover-foreground: 219 20% 20%;
 
-    --primary: 199 89% 48%;
+    --primary: 219 60% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 215 25% 15%;
+    --secondary: 219 25% 85%;
+    --secondary-foreground: 219 20% 20%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 219 25% 85%;
+    --muted-foreground: 219 15% 45%;
 
-    --accent: 199 89% 48%;
+    --accent: 219 60% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 30% 92%;
-    --input: 210 30% 92%;
-    --ring: 199 89% 48%;
+    --border: 219 25% 80%;
+    --input: 219 25% 80%;
+    --ring: 219 60% 50%;
 
     --radius: 0.75rem;
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 215 25% 15%;
-    --sidebar-primary: 199 89% 48%;
+    --sidebar-foreground: 219 20% 20%;
+    --sidebar-primary: 219 60% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 97%;
-    --sidebar-accent-foreground: 215 25% 15%;
-    --sidebar-border: 210 30% 92%;
-    --sidebar-ring: 199 89% 48%;
+    --sidebar-accent: 219 20% 95%;
+    --sidebar-accent-foreground: 219 20% 20%;
+    --sidebar-border: 219 25% 88%;
+    --sidebar-ring: 219 60% 50%;
 
     /* Custom Design Tokens */
-    --surface: 210 40% 98%;
-    --surface-hover: 210 40% 95%;
-    --text-primary: 215 25% 15%;
-    --text-secondary: 215 16% 47%;
-    --text-tertiary: 215 10% 60%;
+    --surface: 219 30% 94%;
+    --surface-hover: 219 30% 88%;
+    --text-primary: 219 20% 20%;
+    --text-secondary: 219 15% 45%;
+    --text-tertiary: 219 15% 60%;
 
     /* Email Category Colors */
     --category-interested: 142 71% 45%;
-    --category-meeting: 199 89% 48%;
+    --category-meeting: 219 60% 50%;
     --category-not-interested: 0 84% 60%;
     --category-spam: 25 95% 53%;
     --category-ooo: 271 91% 65%;
-    --category-uncategorized: 215 10% 60%;
+    --category-uncategorized: 219 15% 60%;
 
     /* Animations */
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
