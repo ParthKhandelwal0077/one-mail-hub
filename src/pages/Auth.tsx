@@ -2,34 +2,81 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Mail, Lock, Chrome } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Phone, Lock, Chrome, Loader2 } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import { validatePhoneNumber, validatePassword } from "@/lib/auth";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
+  const { login, register, isAuthenticated } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Redirect if already authenticated
+  if (isAuthenticated) {
+    const from = location.state?.from?.pathname || "/dashboard";
+    navigate(from, { replace: true });
+    return null;
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Mock authentication - in production, this would connect to your auth system
-    if (email && password) {
-      localStorage.setItem("isAuthenticated", "true");
+    // Validate phone number
+    if (!validatePhoneNumber(phoneNumber)) {
       toast({
-        title: isLogin ? "Welcome back!" : "Account created!",
-        description: isLogin ? "You've successfully logged in." : "Your account has been created.",
-      });
-      navigate("/dashboard");
-    } else {
-      toast({
-        title: "Error",
-        description: "Please fill in all fields.",
+        title: "Invalid Phone Number",
+        description: "Please enter a valid phone number.",
         variant: "destructive",
       });
+      return;
+    }
+
+    // Validate password
+    const passwordValidation = validatePassword(password);
+    if (!passwordValidation.isValid) {
+      toast({
+        title: "Invalid Password",
+        description: passwordValidation.errors.join(", "),
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      
+      if (isLogin) {
+        await login(phoneNumber, password);
+        toast({
+          title: "Welcome back!",
+          description: "You've successfully logged in.",
+        });
+      } else {
+        await register(phoneNumber, password);
+        toast({
+          title: "Account created!",
+          description: "Your account has been created successfully.",
+        });
+      }
+      
+      const from = location.state?.from?.pathname || "/dashboard";
+      navigate(from, { replace: true });
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "An error occurred. Please try again.";
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -68,16 +115,17 @@ const Auth = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="phoneNumber">Phone Number</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-3 h-5 w-5 text-text-tertiary" />
+                <Phone className="absolute left-3 top-3 h-5 w-5 text-text-tertiary" />
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="you@example.com"
+                  id="phoneNumber"
+                  type="tel"
+                  placeholder="+1234567890"
                   className="pl-10"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  disabled={isLoading}
                 />
               </div>
             </div>
@@ -93,12 +141,20 @@ const Auth = () => {
                   className="pl-10"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  disabled={isLoading}
                 />
               </div>
             </div>
 
-            <Button type="submit" className="w-full">
-              {isLogin ? "Login" : "Create Account"}
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {isLogin ? "Logging in..." : "Creating Account..."}
+                </>
+              ) : (
+                isLogin ? "Login" : "Create Account"
+              )}
             </Button>
           </form>
 
@@ -115,6 +171,7 @@ const Auth = () => {
             <Button
               variant="outline"
               onClick={() => handleOAuth("Google")}
+              disabled={isLoading}
             >
               <Chrome className="mr-2 h-5 w-5" />
               Google
@@ -122,8 +179,9 @@ const Auth = () => {
             <Button
               variant="outline"
               onClick={() => handleOAuth("Microsoft")}
+              disabled={isLoading}
             >
-              <Mail className="mr-2 h-5 w-5" />
+              <Phone className="mr-2 h-5 w-5" />
               Microsoft
             </Button>
           </div>

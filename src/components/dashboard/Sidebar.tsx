@@ -10,21 +10,34 @@ import {
   Plus,
   MessageSquare,
   LogOut,
+  User,
+  Phone,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth"; 
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user, userProfile, logout } = useAuth();
 
-  const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    navigate("/");
-    toast({
-      title: "Logged out",
-      description: "You've been successfully logged out.",
-    });
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/auth");
+      toast({
+        title: "Logged out",
+        description: "You've been successfully logged out.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to logout. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleLinkAccount = (type: string) => {
@@ -47,6 +60,27 @@ const Sidebar = () => {
       <div className="p-6">
         <h1 className="text-2xl font-bold text-primary">oneMail</h1>
       </div>
+
+      {/* User Profile Section */}
+      {user && (
+        <div className="px-4 py-4 border-b border-border">
+          <div className="flex items-center space-x-3">
+            <Avatar className="h-10 w-10">
+              <AvatarFallback className="bg-primary text-primary-foreground">
+                <User className="h-5 w-5" />
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-text truncate">
+                {userProfile?.phoneNumber || user.phoneNumber}
+              </p>
+              <p className="text-xs text-text-secondary truncate">
+                User ID: {user.id.slice(0, 8)}...
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="px-4 space-y-2">
         <Button
