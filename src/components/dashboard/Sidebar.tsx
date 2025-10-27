@@ -17,11 +17,14 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth"; 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useState } from "react";
+import LinkEmailAccount from "./LinkEmailAccount";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user, userProfile, logout } = useAuth();
+  const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -41,10 +44,14 @@ const Sidebar = () => {
   };
 
   const handleLinkAccount = (type: string) => {
-    toast({
-      title: "Coming Soon",
-      description: `${type} account linking will be available soon.`,
-    });
+    if (type === "Email") {
+      setIsEmailDialogOpen(true);
+    } else {
+      toast({
+        title: "Coming Soon",
+        description: `${type} account linking will be available soon.`,
+      });
+    }
   };
 
   const navItems = [
@@ -56,12 +63,13 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-64 bg-card border-r border-border flex flex-col">
-      <div className="p-6">
-        <h1 className="text-2xl font-bold text-primary">oneMail</h1>
-      </div>
+    <>
+      <aside className="w-64 bg-card border-r border-border flex flex-col">
+        <div className="p-6">
+          <h1 className="text-2xl font-bold text-primary">oneMail</h1>
+        </div>
 
-      {/* User Profile Section */}
+        {/* User Profile Section */}
       {user && (
         <div className="px-4 py-4 border-b border-border">
           <div className="flex items-center space-x-3">
@@ -137,6 +145,11 @@ const Sidebar = () => {
         </Button>
       </div>
     </aside>
+    <LinkEmailAccount 
+      open={isEmailDialogOpen} 
+      onOpenChange={setIsEmailDialogOpen} 
+    />
+    </>
   );
 };
 

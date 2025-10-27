@@ -11,7 +11,11 @@ import {
   ChangePasswordRequest,
   DeleteAccountRequest,
   UserStats,
-  ApiError
+  ApiError,
+  EmailAccountStatus,
+  GmailAuthUrlResponse,
+  GmailCallbackRequest,
+  GmailCallbackResponse
 } from '@/types/auth';
 
 class AuthService {
@@ -202,6 +206,66 @@ class AuthService {
       }
 
       const response = await api.get<UserStats>('/user/stats', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+
+      return response.data;
+    } catch (error: unknown) {
+      throw this.handleError(error);
+    }
+  }
+
+  // Get email account status
+  async getEmailAccountStatus(userId: string): Promise<EmailAccountStatus> {
+    try {
+      const accessToken = tokenStorage.getAccessToken();
+      if (!accessToken) {
+        throw new Error('No access token available');
+      }
+
+      const response = await api.get<EmailAccountStatus>(`/auth/status/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+
+      return response.data;
+    } catch (error: unknown) {
+      throw this.handleError(error);
+    }
+  }
+
+  // Get Gmail auth URL
+  async getGmailAuthUrl(): Promise<GmailAuthUrlResponse> {
+    try {
+      const accessToken = tokenStorage.getAccessToken();
+      if (!accessToken) {
+        throw new Error('No access token available');
+      }
+
+      const response = await api.get<GmailAuthUrlResponse>('/auth/gmail', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+
+      return response.data;
+    } catch (error: unknown) {
+      throw this.handleError(error);
+    }
+  }
+
+  // Handle Gmail OAuth callback
+  async handleGmailCallback(data: GmailCallbackRequest): Promise<GmailCallbackResponse> {
+    try {
+      const accessToken = tokenStorage.getAccessToken();
+      if (!accessToken) {
+        throw new Error('No access token available');
+      }
+
+      const response = await api.post<GmailCallbackResponse>('/auth/gmail/callback', data, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
